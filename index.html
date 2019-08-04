@@ -5,19 +5,81 @@
                 display:flex;
                 justify-content:center;
                 align-items: center;
+                flex-direction: column;
             }
+            .cell {
+                border: solid black 1px;
+                padding: 1rem;
+            }
+            .row {
+                /* border: solid black 1px; */
+                display: flex;
+            }
+            .green {
+                border: solid black 1px;
+                padding: 1rem;
+                background-color: greenyellow;
+            }
+           
+
         </style>
     </head>
     <body>
         <div id="container">
             <h1>Grid from Memory(hopeful)</h1>
             <div id="theGrid">
+                <table id="theTable">
+
+                </table>
 
             </div>
 
         </div>
 
         <script>
+            const gridSpace = document.querySelector("#theGrid");
+
+            //gridMachine will produce a grid based on a single input;
+            function gridMachine(n) {
+                let rows = [];
+                for(let i = 0; i < n; i++) {
+                    let row = []
+                    rows.push(row);
+                    //console.log(row)
+                    for(let j = 0; j<n; j++) {
+                        row.push("");
+                    }
+                }
+                return rows;
+            }
+            //We can create a variable within the JS that will predetermine our grid size;
+            const gmOutput = gridMachine(6);
+            //generateHTML that will fill in the gridd that we created with gridMachine;
+            function generateHTML(arrayOfRows) {
+                return arrayOfRows.map(row => `
+                <div class="row">
+                    ${row.map(cell =>`<div class="cell">${cell}</div>`).join('')}
+                </div>
+                `).join('');
+            }
+            //In order to visiualize any of this on the page, we need to create a function that defines the innerHTML of a section of the document;
+            const render = () => {
+                const html = generateHTML(gmOutput);
+                gridSpace.innerHTML = html;
+            };
+            gridSpace.addEventListener('click', (ev) => {
+                const cell = ev.target;
+                let color = "turquoise"
+                if(cell.style.backgroundColor !== color){
+                cell.style.backgroundColor = color; 
+                } else {
+                    cell.style.backgroundColor = ""
+                }
+            })
+            render();
+
+
+            
         </script>
     </body>
 </html>
