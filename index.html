@@ -7,79 +7,160 @@
                 align-items: center;
                 flex-direction: column;
             }
+            #theGrid {
+                margin: 1rem;
+                padding:1rem;
+            }
             .cell {
+                display:flex;
                 border: solid black 1px;
                 padding: 1rem;
             }
             .row {
-                /* border: solid black 1px; */
+                display:flex;
+            }
+            .color {
+                display:flex;
+                border: solid black 1px;
+                width: 1rem;
+                height: 1rem;
+            }
+            #colorOpt {
+                display:flex;
+                flex-direction: row;;
+                margin: 1rem;
+            }
+            .colorRow {
                 display: flex;
             }
-            .green {
-                border: solid black 1px;
-                padding: 1rem;
-                background-color: greenyellow;
+            #title {
+                text-align: center;
             }
+
            
 
         </style>
     </head>
     <body>
         <div id="container">
-            <h1>Grid from Memory(hopeful)</h1>
+            <h1 id="title">Grid from Memory(hopeful)</h1>
+            <form id="form">
+                <!-- <input type="text" placeholder="value" id="inputVal"> -->
+                <input type="text" placeholder="rows" id="rowInput">
+                <input type="text" placeholder="columns" id="colInput">
+                <button type="submit">Make Grid</button>
+            </form>
             <div id="theGrid">
-                <table id="theTable">
 
-                </table>
-
+            </div>
+            <div id="colorOpt">
+                <div class="color" style="background-color:whitesmoke" title="White Smoke"></div>
+                <div class="color" style="background-color:aqua" title="Aqua"></div>
+                <div class="color" style="background-color:brown" title="Brown"></div>
+                <div class="color" style="background-color:coral" title="Coral"></div>
+                <div class="color" style="background-color:darkorchid" title="Dark Orchid"></div>
+                <div class="color" style="background-color:firebrick" title="Fire Brick"></div>
+                <div class="color" style="background-color:gold" title="Gold"></div>
+                <div class="color" style="background-color:hotpink" title="Hot Pink"></div>
+                <div class="color" style="background-color:indianred" title="Indian Red"></div>
+                <div class="color" style="background-color:khaki" title="Khaki"></div>
+                <div class="color" style="background-color:lawngreen" title="Lawn Green"></div>
+                <div class="color" style="background-color:mediumblue" title="MediumBlue"></div>
+                <div class="color" style="background-color:navajowhite" title="Navajo White"></div>
+                <div class="color" style="background-color:olive" title="Olive"></div>
+                <div class="color" style="background-color:plum" title="Plum"></div>
+                <div class="color" style="background-color:royalblue"></div>
+                <div class="color" style="background-color:silver" title="Silver"></div>
+                <div class="color" style="background-color:tomato" title="Tomato"></div>
+                <div class="color" style="background-color:violet" title="Violet"></div>
+                <div class="color" style="background-color:yellow" title="Yellow"></div>
             </div>
 
         </div>
 
         <script>
             const gridSpace = document.querySelector("#theGrid");
-
-            //gridMachine will produce a grid based on a single input;
-            function gridMachine(n) {
-                let rows = [];
-                for(let i = 0; i < n; i++) {
-                    let row = []
-                    rows.push(row);
-                    //console.log(row)
-                    for(let j = 0; j<n; j++) {
-                        row.push("");
-                    }
+            const colInput = document.querySelector("#colInput");
+            const rowInput = document.querySelector("#rowInput");
+            const form = document.querySelector("#form")
+            const colorOpt = document.querySelector("#colorOpt")
+            
+            form.addEventListener('submit', (ev) => {
+                ev.preventDefault();
+                let html = '';
+                for(let i = 0; i<rowInput.value; i++) {
+                    html += '<div class="row">';
+                        for(let j=0; j<colInput.value; j++) {
+                            html += '<div class="cell"></div>';
+                        }
+                    html += '</div>';
                 }
-                return rows;
-            }
-            //We can create a variable within the JS that will predetermine our grid size;
-            const gmOutput = gridMachine(6);
-            //generateHTML that will fill in the gridd that we created with gridMachine;
-            function generateHTML(arrayOfRows) {
-                return arrayOfRows.map(row => `
-                <div class="row">
-                    ${row.map(cell =>`<div class="cell">${cell}</div>`).join('')}
-                </div>
-                `).join('');
-            }
-            //In order to visiualize any of this on the page, we need to create a function that defines the innerHTML of a section of the document;
-            const render = () => {
-                const html = generateHTML(gmOutput);
                 gridSpace.innerHTML = html;
-            };
+            })
+
+            colorOpt.addEventListener('click', (ev)=> {
+                color = ev.target.style.backgroundColor
+                console.log(color)
+            })
             gridSpace.addEventListener('click', (ev) => {
                 const cell = ev.target;
-                let color = "turquoise"
                 if(cell.style.backgroundColor !== color){
                 cell.style.backgroundColor = color; 
                 } else {
                     cell.style.backgroundColor = ""
                 }
             })
-            render();
 
 
+
+            //const inputVal = document.querySelector("#inputVal")
+            //const gmOutput = gridMachine(inputVal);
+          
+            // function gridMachine(n) {
+            //     let rows = [];
+            //     for(let i = 0; i < n; i++) {
+            //         let row = []
+            //         rows.push(row);
+            //         //console.log(row)
+            //         for(let j = 0; j<n; j++) {
+            //             row.push("");
+            //         }
+            //     }
+            //     return rows;
+            // }
+
+            // function generateHTML(arrayOfRows) {
+            //     return arrayOfRows.map(row => `
+            //     <div class="row">
+            //         ${row.map(cell =>`<div class="cell">${cell}</div>`).join('')}
+            //     </div>
+            //     `).join('');
+            // }
             
+            // const render = () => {
+            //     const html = generateHTML(ogmOutput);
+            //     gridSpace.innerHTML = html;
+            // };
+            
+            // render();
+
+
+
+              //const ogmOutput = otherGridMachine(colInput, rowInput);
+                 // function otherGridMachine(n, y) {
+            //     let rows = [];
+            //     for(let i=0; i<n ; i++) {
+            //         let row = [];
+            //         rows.push(row);
+            //         for(let j=0; j<y; j++) {
+            //             row.push('');
+            //         }
+            //     }
+            //     return rows;
+            // }
+
+
+
         </script>
     </body>
 </html>
